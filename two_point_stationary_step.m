@@ -1,4 +1,6 @@
-function fn = step (f)
+function fn = two_point_stationary_step (f, k)
+  % NB: questa funzione non ha bisogno di k, ma lo inseriamo comunque nell'input
+  % per compatibilità con le altre funzioni step
   n = size(f, 1);
   fn = zeros(2*n - 1, 1);
 

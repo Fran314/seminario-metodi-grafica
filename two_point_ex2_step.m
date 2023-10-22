@@ -1,4 +1,4 @@
-function fn = step (f, k)
+function fn = two_point_ex2_step (f, k)
   n = size(f, 1);
   fn = zeros(2*n - 1, 1);
 
@@ -12,13 +12,25 @@ function fn = step (f, k)
 endfunction
 
 function res = delta(k, i)
-  res = (2*i + 1 - 2^k) / (3 * (2*i + 1)^2 - 6*(2*i + 1) * (2^k) + 1);
+  if (i < 2^(k-1))
+    res = 1 / (2 * i + 1);
+  else
+    res = 1 / (2 * i + 1 - 2^(k+1));
+  endif
 endfunction
 
 function res = a(k, i)
-  res = 1/2 + 3*delta(k, i) / 2;
+  if (k == 0)
+    res = 1/2;
+  else
+    res = 1/2 + delta(k, i) / 4;
+  endif
 endfunction
 
 function res = b(k, i)
-  res = 1/2 - 3*delta(k, i) / 2;
+  if (k == 0)
+    res = 1/2;
+  else
+    res = 1/2 - delta(k, i) / 4;
+  endif
 endfunction
