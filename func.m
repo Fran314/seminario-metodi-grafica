@@ -1,35 +1,44 @@
-function retval = func (step, dd)
-  steps = 10;
-
+function retval = func (step, pp, tp, tt)
   % Control polygon
   f0 = [0; 0; 0; 2; 3; 1; -2; -1; 0; 0; 0];
+
   f = f0;
 
   figure(1)
   plot(f, 'o-')
-  title("f^0")
+  axis off
+  tt && title("f^0");
+  saveas(gcf, sprintf("f_%d_%s_%d.svg", pp, tp, 0))
 
-  for k=0:steps - 1
+  for k=0:3
     f = step(f, k);
 
-    if (k < 4)
-      figure(k+2)
-      plot(f, 'o-')
-      title(sprintf("f^%d", k+1))
-    endif
+    figure(k+2)
+    plot(f, 'o-')
+    axis off
+    tt && title(sprintf("f^%d", k+1));
+  saveas(gcf, sprintf("f_%d_%s_%d.svg", pp, tp, k+1))
+  endfor
+
+  for k=4:10
+    f = step(f, k);
   endfor
 
   figure(5)
   plot(f)
-  title("f")
+  axis off
+  tt && title("f");
+  saveas(gcf, sprintf("f_%d_%s_%s.svg", pp, tp, "f"))
 
   figure(6)
   plot(diff(f))
-  title("f'")
+  axis off
+  tt && title("f'");
+  saveas(gcf, sprintf("f_%d_%s_%s.svg", pp, tp, "df"))
 
-  if dd
-    figure(7)
-    plot(diff(diff(f)))
-    title("f''")
-  endif
+  figure(7)
+  plot(diff(diff(f)))
+  axis off
+  tt && title("f''");
+  saveas(gcf, sprintf("f_%d_%s_%s.svg", pp, tp, "ddf"))
 endfunction
